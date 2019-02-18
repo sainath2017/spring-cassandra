@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -72,5 +73,15 @@ public class StudentService {
 			return students.stream().map(mapper::toDto).collect(Collectors.toList());
 		}
 
+	}
+
+	public List<StudentDto> filterByLastName(String lastName) {
+		Iterable<Student> students = studentDao.searchByLastName(lastName);
+		Iterator<Student> studentList = students.iterator();
+		List<StudentDto> studentDtos = new ArrayList<>();
+		while(studentList.hasNext()) {
+			studentDtos.add(mapper.toDto(studentList.next()));
+		}
+		return studentDtos;
 	}
 }

@@ -55,6 +55,11 @@ public class StudentController {
     public ResponseEntity<List<StudentDto>> filterByFirstName(@RequestParam(name = "firstName") String firstName) {
         return new ResponseEntity<>(studentService.filterByFirstName(firstName), HttpStatus.OK);
     }
+    
+    @PostMapping(value = "/filter-by-last-name")
+    public ResponseEntity<List<StudentDto>> filterByLastName(@RequestParam(name = "lastName") String lastName) {
+    	return new ResponseEntity<>(studentService.filterByLastName(lastName), HttpStatus.OK);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
