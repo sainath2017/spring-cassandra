@@ -4,9 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /*
- * spring boot cassandra example with mapstruct and lombok
+ * spring boot cassandra example with map struct and lombok
  */
-
 @SpringBootApplication
 public class SpringCassandraApplication {
 

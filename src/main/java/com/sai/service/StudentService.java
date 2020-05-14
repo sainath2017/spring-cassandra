@@ -5,10 +5,8 @@ import com.sai.dto.StudentDto;
 import com.sai.dto.mapper.StudentMapper;
 import com.sai.exception.EntityNotFoundException;
 import com.sai.model.Student;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,14 +18,16 @@ import java.util.stream.Collectors;
 @Service
 public class StudentService {
 
-	@Autowired
 	private static Logger log = LoggerFactory.getLogger(StudentService.class);
 
-	@Autowired
-	private StudentDao studentDao;
+	private final StudentDao studentDao;
 
-	@Autowired
-	private StudentMapper mapper;
+	private final StudentMapper mapper;
+
+	public StudentService(StudentDao studentDao, StudentMapper mapper) {
+		this.studentDao = studentDao;
+		this.mapper = mapper;
+	}
 
 	public List<StudentDto> getStudentDetails() {
 		List<Student> students = studentDao.findAll();
@@ -51,7 +51,7 @@ public class StudentService {
 			student.setLastName(dto.getLastName());
 			return studentDao.save(student);
 		} else {
-			log.error("Entiy is not found for dto {} ", dto);
+			log.error("Entity is not found for dto {} ", dto);
 			throw new EntityNotFoundException("Entity Not Found");
 		}
 	}
@@ -67,7 +67,7 @@ public class StudentService {
 	public List<StudentDto> filterByFirstName(String firstName) {
 		List<Student> students = studentDao.findStudentsByFirstName(firstName);
 		if (students.isEmpty()) {
-			log.error("Entiy is not found for firstName = {} ", firstName);
+			log.error("Entity is not found for firstName = {} ", firstName);
 			throw new EntityNotFoundException("Entity Not Found");
 		} else {
 			return students.stream().map(mapper::toDto).collect(Collectors.toList());

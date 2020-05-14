@@ -25,8 +25,11 @@ import java.util.List;
 @RequestMapping("/v1-student")
 public class StudentController {
 
-    @Autowired
-    private StudentService studentService;
+    private final StudentService studentService;
+
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
     /*
      * This Method is executed after dependency injection is done to perform initialization of sample data
